@@ -3,7 +3,6 @@ import {
   FiHome,
   FiUser,
   FiCalendar,
-  // FiBarChart2,
   FiFileText,
   FiClipboard,
   FiCreditCard,
@@ -12,7 +11,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { useState, useEffect } from "react";
-import { FaUserCircle } from "react-icons/fa"; // Profile icon
+import { FaUserCircle } from "react-icons/fa";
 import Logo from "../assets/images/logo.png";
 
 const Sidebar = () => {
@@ -29,14 +28,12 @@ const Sidebar = () => {
     }
   }, []);
 
-
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();
-    navigate("/login"); 
+    navigate("/login");
     window.location.reload();
   };
-
 
   return (
     <>
@@ -98,7 +95,6 @@ const Sidebar = () => {
           <NavItem to="/prescriptions" icon={<FiFileText />} title="Prescription" />
           <NavItem to="/medical-records" icon={<FiClipboard />} title="Medical Records" />
           <NavItem to="/billing" icon={<FiCreditCard />} title="Billing" />
-          {/* <NavItem to="/reports" icon={<FiBarChart2 />} title="Reports" /> */}
         </div>
       </motion.nav>
 
@@ -111,14 +107,13 @@ const Sidebar = () => {
           exit={{ opacity: 0, y: -10 }}
         >
           <div className="flex flex-col space-y-2">
-            <NavItem to="/" icon={<FiHome />} title="Dashboard" mobile />
-            <NavItem to="/patients" icon={<FiUser />} title="Patients" mobile />
-            <NavItem to="/appointments" icon={<FiCalendar />} title="Appointments" mobile />
-            <NavItem to="/doctors" icon={<FaUserDoctor />} title="Doctors" mobile />
-            <NavItem to="/prescriptions" icon={<FiFileText />} title="Prescription" mobile />
-            <NavItem to="/medical-records" icon={<FiClipboard />} title="Medical Records" mobile />
-            <NavItem to="/billing" icon={<FiCreditCard />} title="Billing" mobile />
-            {/* <NavItem to="/reports" icon={<FiBarChart2 />} title="Reports" mobile /> */}
+            <NavItem to="/" icon={<FiHome />} title="Dashboard" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/patients" icon={<FiUser />} title="Patients" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/appointments" icon={<FiCalendar />} title="Appointments" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/doctors" icon={<FaUserDoctor />} title="Doctors" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/prescriptions" icon={<FiFileText />} title="Prescription" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/medical-records" icon={<FiClipboard />} title="Medical Records" mobile onClick={() => setMobileMenuOpen(false)} />
+            <NavItem to="/billing" icon={<FiCreditCard />} title="Billing" mobile onClick={() => setMobileMenuOpen(false)} />
 
             {user && (
               <>
@@ -147,11 +142,13 @@ interface NavItemProps {
   icon: React.ReactNode;
   title: string;
   mobile?: boolean;
+  onClick?: () => void;
 }
 
-const NavItem = ({ to, icon, title, mobile = false }: NavItemProps) => (
+const NavItem = ({ to, icon, title, mobile = false, onClick }: NavItemProps) => (
   <Link
     to={to}
+    onClick={onClick}
     className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm md:text-base whitespace-nowrap transition-all
       ${mobile
         ? "text-white bg-blue-700 hover:bg-blue-800"
